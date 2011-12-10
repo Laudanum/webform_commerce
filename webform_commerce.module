@@ -216,10 +216,6 @@ function webform_commerce_price_adjust(&$form, $form_state) {
  * Inspired by from webform_pay
  */
 function webform_commerce_after_build($form) {
-  // $node = $form['#node'];
-  // $commerce_cid = $node->webform_commerce_cid;
-  // $component = $node->webform['components'][$commerce_cid];
-
   // If editing a submission, do NOT reprocess add to cart/validate functions.
   if (!empty($form['#submission']->sid)) {
     $submit_index = array_search('webform_commerce_submit', $form['#submit']);
@@ -334,17 +330,6 @@ function webform_commerce_submit(&$form, &$form_state) {
             // Add a reference for each pricing option to the main line item
             $line_item->data['webform_price_components'][] = $option;
             commerce_line_item_save($line_item);
-
-            /// $unit_price = array(
-            ///   'amount' => $option['amount'],
-            ///   'currency_code' => 'USD',
-            ///   'data' => array(),
-            /// );
-            /// $new_line_item = webform_commerce_line_item_new($unit_price, $line_item->order_id, NULL, $option['details']);
-            /// 
-            /// commerce_line_item_save($new_line_item);
-            /// // Add the line item to the order using the wrapper.
-            /// $order_wrapper->commerce_line_items[] = $new_line_item;
           }
         }
 
@@ -413,7 +398,7 @@ function webform_commerce_line_item_populate($line_item, $unit_price, $details =
     if (!commerce_price_component_load($line_item_wrapper->commerce_unit_price->value(), 'webform_fee')) {
       $line_item_wrapper->commerce_unit_price->data = commerce_price_component_add(
         $unit_price,
-        'webform_fee',
+        'base_price',
         $unit_price,
         FALSE,
         FALSE

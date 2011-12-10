@@ -80,36 +80,7 @@ function webform_commerce_rules_action_info() {
       ),
   );
   
-  
-  $actions['webform_commerce_calculate_price'] = array(
-    'label' => t('Update price to include extra pricing options.'),
-    'parameter' => array(
-      'commerce_line_item' => array(
-         'type' => 'commerce_line_item',
-         'label' => t('Line item to update'),
-      ),
-      'component_name' => array(
-        'type' => 'text',
-        'label' => t('Price component type'),
-        'description' => t('Price components track changes to prices made during the price calculation process, and they are carried over from the unit price to the total price of a line item. When an order total is calculated, it combines all the components of every line item on the order. When the unit price is altered by this action, the selected type of price component will be added to its data array and reflected in the order total display when it is formatted with components showing. Defaults to base price, which displays as the order Subtotal.'),
-        'options list' => 'webform_commerce_price_component_options_list',
-        'default value' => 'base_price',
-      ),
-    ),
-    'group' => t('Webform Commerce'),
-      'callbacks' => array(
-        'execute' => 'webform_commerce_calculate_price',
-      ),
-  );
-
   return $actions;
-}
-
-/**
- * Options list callback: price component selection list.
- */
-function webform_commerce_price_component_options_list() {
-  return commerce_price_component_titles();
 }
 
 /**
