@@ -61,6 +61,24 @@ function webform_commerce_rules_action_info() {
         'execute' => 'webform_commerce_update_status',
       ),
   );
+
+  $actions['webform_commerce_add_entity_to_cart'] = array(
+    'label' => t('Add a line item entity to an order.'),
+    'parameter' => array(
+      'commerce_line_item' => array(
+         'type' => 'commerce_line_item',
+         'label' => t('Line item to add'),
+      ),
+      'commerce_order' => array(
+         'type' => 'commerce_order',
+         'label' => t('Order to update'),
+      ),
+    ),
+    'group' => t('Webform Commerce'),
+      'callbacks' => array(
+        'execute' => 'webform_commerce_add_entity_to_cart',
+      ),
+  );
   
   
   $actions['webform_commerce_calculate_price'] = array(
@@ -103,6 +121,11 @@ function webform_commerce_update_status($order) {
   foreach($sids as $sid) {
     webform_commerce_status_update($sid['sid'], 'paid');
   }
+}
+
+function webform_commerce_add_entity_to_cart($line_item, $order) {
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+  $order_wrapper->commerce_line_items[] = $line_item;
 }
 
 function webform_commerce_calculate_price($line_item, $component_name) {
