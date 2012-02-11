@@ -98,7 +98,7 @@ function _webform_edit_commerce($component) {
     '#title' => t('Current base price'),
     '#prefix' => '<div id="amount">',
     '#suffix' => '</div>',
-    '#markup' => '<span class="cost">' . commerce_currency_format($display_amount, 'USD') . '</span>',
+    '#markup' => '<span class="cost">' . commerce_currency_format($display_amount['amount'], 'USD') . '</span>',
     '#states' => $ref_product,
   );
   
